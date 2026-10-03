@@ -15,10 +15,27 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Longevos | Academia para 50+ em João Pessoa',
       },
+      {
+        name: 'description',
+        content:
+          'Primeira academia da Paraíba para quem tem 50+. Treino com avaliação física, educador físico, fisioterapeuta e nutricionista. Unidades Aeroclube e Miramar.',
+      },
+      { name: 'theme-color', content: '#43956C' },
     ],
     links: [
+      { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossOrigin: 'anonymous',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,700..800&display=swap',
+      },
       {
         rel: 'stylesheet',
         href: appCss,
@@ -30,7 +47,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
