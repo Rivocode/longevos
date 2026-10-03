@@ -2,7 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import { SITE_NAME } from '#/content/seo'
+import { INDEXABLE, SITE_NAME } from '#/content/seo'
 
 import appCss from '../styles.css?url'
 
@@ -20,6 +20,7 @@ export const Route = createRootRoute({
       { name: 'theme-color', content: '#43956C' },
       { property: 'og:site_name', content: SITE_NAME },
       { property: 'og:locale', content: 'pt_BR' },
+      ...(INDEXABLE ? [] : [{ name: 'robots', content: 'noindex, nofollow' }]),
     ],
     links: [
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },

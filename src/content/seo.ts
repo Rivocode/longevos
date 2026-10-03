@@ -3,8 +3,14 @@ import { SITE } from './site'
 
 /** Domínio público do site (sem barra no final). */
 export const SITE_URL = (
-  import.meta.env.VITE_SITE_URL || 'https://somoslongevos.com.br'
+  import.meta.env.VITE_SITE_URL || 'https://proposta-longevos.rivocode.com.br'
 ).replace(/\/$/, '')
+
+/**
+ * A proposta não deve aparecer no Google para não competir com o site
+ * oficial da Longevos. Em produção, defina VITE_INDEXABLE=true.
+ */
+export const INDEXABLE = import.meta.env.VITE_INDEXABLE === 'true'
 
 export const SITE_NAME = 'Longevos Espaço Fitness'
 export const OG_IMAGE = `${SITE_URL}/og-image.jpg`

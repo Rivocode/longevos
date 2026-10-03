@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://somoslongevos.com.br/sitemap.xml
+Sitemap: https://proposta-longevos.rivocode.com.br/sitemap.xml
