@@ -64,10 +64,13 @@ export function LandingPage() {
 
 function WhatsAppButton({
   children,
+  mobileLabel,
   variant = 'solid',
   className = '',
 }: {
   children?: ReactNode
+  /** Texto mais curto para telas pequenas, para o botão caber em uma linha. */
+  mobileLabel?: string
   variant?: 'solid' | 'white'
   className?: string
 }) {
@@ -77,26 +80,30 @@ function WhatsAppButton({
       href={SITE.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group/wa inline-flex min-h-16 items-center justify-center gap-3 rounded-full py-2 pr-6 pl-2 text-lg font-bold whitespace-nowrap transition-[background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand active:translate-y-0 ${
+      className={`group/wa inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full py-1.5 pr-5 pl-1.5 text-base font-bold whitespace-nowrap transition sm:min-h-16 sm:gap-3 sm:py-2 sm:pr-6 sm:pl-2 sm:text-lg-[background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand active:translate-y-0 ${
         white
           ? 'bg-white text-brand-deep hover:shadow-[0_14px_34px_-14px_rgb(32_35_40/0.45)]'
           : 'bg-brand-deep text-white hover:bg-ink hover:shadow-[0_14px_34px_-14px_rgb(47_125_88/0.8)]'
       } ${className}`}
     >
       <span
-        className={`flex size-12 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover/wa:-rotate-12 ${
+        className={`flex size-11 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover/wa:-rotate-12 sm:size-12 ${
           white ? 'bg-[#25D366] text-white' : 'bg-white/15 text-white'
         }`}
       >
         <WhatsAppIcon className="size-6" />
       </span>
-      {children ?? (
+      {mobileLabel || !children ? (
         <>
-          <span className="sm:hidden">Falar no WhatsApp</span>
-          <span className="hidden sm:inline">Falar com a recepção no WhatsApp</span>
+          <span className="sm:hidden">{mobileLabel ?? 'Falar no WhatsApp'}</span>
+          <span className="hidden sm:inline">
+            {children ?? 'Falar com a recepção no WhatsApp'}
+          </span>
         </>
+      ) : (
+        children
       )}
-      <ArrowRightIcon className="size-5 shrink-0 opacity-60 transition-transform duration-300 group-hover/wa:translate-x-1 group-hover/wa:opacity-100" />
+      <ArrowRightIcon className="size-5 shrink-0 opacity-60 transition-transform duration-300 group-hover/wa:translate-x-1 group-hover/wa:opacity-100 max-[359px]:hidden" />
     </a>
   )
 }
@@ -105,7 +112,7 @@ function QuizLink({ light = false }: { light?: boolean }) {
   return (
     <Link
       to="/quiz"
-      className={`group inline-flex min-h-14 items-center gap-2 rounded-full px-2 text-lg font-bold whitespace-nowrap underline-offset-4 hover:underline ${
+      className={`group inline-flex min-h-14 items-center gap-2 rounded-full px-2 text-base font-bold underline-offset-4 hover:underline sm:text-lg sm:whitespace-nowrap ${
         light ? 'text-white' : 'text-ink'
       }`}
     >
@@ -224,7 +231,7 @@ const STATS = [
 function Hero() {
   return (
     <section id="topo" className="overflow-hidden px-5 pt-12 pb-20 md:pt-20 md:pb-28">
-      <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
+      <div className="mx-auto grid grid-cols-1 max-w-6xl items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
         <div>
           <p className="hero-anim mb-4 text-sm font-bold tracking-[0.18em] text-brand-deep uppercase">
             Academia para 50+ em João Pessoa
@@ -282,12 +289,12 @@ function Hero() {
               <li
                 key={s.label}
                 style={stagger(i + 4, 120)}
-                className="hero-anim hero-anim--pop rounded-2xl bg-white px-4 py-3 shadow-[0_10px_30px_-12px_rgb(32_35_40/0.25)] lg:px-5"
+                className="hero-anim hero-anim--pop min-w-0 rounded-2xl bg-white px-3 py-3 shadow-[0_10px_30px_-12px_rgb(32_35_40/0.25)] sm:px-4 lg:px-5"
               >
-                <strong className="block text-2xl font-extrabold text-brand-deep md:text-3xl">
+                <strong className="block text-xl font-extrabold text-brand-deep sm:text-2xl md:text-3xl">
                   <CountUp value={s.value} prefix={s.prefix} />
                 </strong>
-                <span className="text-sm leading-tight text-ink-soft md:text-base">
+                <span className="mt-1 block text-[0.8125rem] leading-snug text-ink-soft sm:text-sm md:text-base">
                   {s.label}
                 </span>
               </li>
@@ -304,7 +311,7 @@ function Hero() {
 function Problem() {
   return (
     <Section className="bg-ink text-white">
-      <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:gap-16">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.1fr] md:gap-16">
         <div>
           <Eyebrow light>Por que a Longevos existe</Eyebrow>
           <Heading light>Academia comum foi pensada para outro público</Heading>
@@ -356,7 +363,7 @@ function Care() {
     <Section id="como-funciona">
       <Eyebrow>Como a Longevos cuida de você</Eyebrow>
       <Heading>Seu treino começa pelo que o seu corpo precisa hoje</Heading>
-      <div className="mt-14 grid gap-5 md:grid-cols-2">
+      <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
         {CARE.map(({ icon: Icon, title, text }, i) => (
           <article
             key={title}
@@ -404,7 +411,7 @@ function Modalities() {
     <Section id="modalidades" className="bg-brand-soft">
       <Eyebrow>Modalidades</Eyebrow>
       <Heading>Escolha o jeito de se movimentar que combina com você</Heading>
-      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {MODALITIES.map(({ icon: Icon, title, text, photo }, i) => (
           <article
             key={title}
@@ -443,7 +450,7 @@ const EVENTS = ['Passeios na praia', 'Bloco de Carnaval', 'Festa Junina', 'Ativa
 function Community() {
   return (
     <Section className="relative overflow-hidden bg-brand-bg text-white">
-      <LogoIcon className="float-slow pointer-events-none absolute -right-10 -bottom-16 h-[28rem] text-white/8 md:right-10" />
+      <LogoIcon className="float-slow pointer-events-none absolute -right-10 bottom-4 h-[28rem] text-white/8 md:right-10" />
       <div className="relative">
         <Eyebrow light>Comunidade</Eyebrow>
         <Heading light>Aqui você ganha companhia para treinar e para comemorar</Heading>
@@ -467,11 +474,14 @@ function Community() {
           href={SITE.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="group mt-10 inline-flex min-h-14 items-center gap-3 rounded-full border-2 border-white/40 px-6 text-lg font-bold transition-colors duration-300 hover:border-white hover:bg-white hover:text-brand-deep"
+          className="group mt-10 inline-flex min-h-14 items-center gap-2.5 rounded-full bg-white py-1.5 pr-5 pl-1.5 text-base font-bold whitespace-nowrap text-ink sm:min-h-16 sm:gap-3 sm:py-2 sm:pr-6 sm:pl-2 sm:text-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-14px_rgb(32_35_40/0.45)]"
         >
-          <InstagramIcon className="size-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-          Ver os encontros no Instagram
-          <ArrowRightIcon className="size-5 transition-transform group-hover:translate-x-1" />
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_107%,#fdf497_0%,#fd5949_45%,#d6249f_60%,#285aeb_90%)] text-white transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-6">
+            <InstagramIcon className="size-6" />
+          </span>
+          <span className="sm:hidden">Ver no Instagram</span>
+          <span className="hidden sm:inline">Ver os encontros no Instagram</span>
+          <ArrowRightIcon className="size-5 shrink-0 opacity-60 transition-transform duration-300 group-hover:translate-x-1 group-hover:opacity-100 max-[359px]:hidden" />
         </a>
       </div>
     </Section>
@@ -495,10 +505,12 @@ function Miramar() {
           <Eyebrow>Nova unidade Miramar</Eyebrow>
           <Heading>Mais espaço para treinar, conversar e ser bem atendido</Heading>
         </div>
-        <WhatsAppButton className="shrink-0">Quero conhecer a unidade</WhatsAppButton>
+        <WhatsAppButton className="shrink-0" mobileLabel="Conhecer a unidade">
+          Quero conhecer a unidade
+        </WhatsAppButton>
       </div>
 
-      <div className="mt-14 grid gap-4 md:grid-cols-4 md:grid-rows-2">
+      <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-2">
         <figure
           data-reveal
           className="group relative overflow-hidden rounded-3xl md:col-span-2 md:row-span-2"
@@ -562,7 +574,7 @@ function Steps() {
     <Section>
       <Eyebrow>Como começar</Eyebrow>
       <Heading>Três passos até o seu primeiro treino</Heading>
-      <ol className="mt-14 grid gap-8 md:grid-cols-3 md:gap-6">
+      <ol className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
         {STEPS.map((step, i) => (
           <li
             key={step.title}
@@ -594,7 +606,7 @@ const PERIODS = ['Mensal', 'Trimestral', 'Semestral', 'Anual']
 function Plans() {
   return (
     <Section id="planos" className="bg-white">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div>
           <Eyebrow>Planos</Eyebrow>
           <Heading>Planos para treinar 3 ou 5 vezes por semana</Heading>
@@ -606,21 +618,21 @@ function Plans() {
 
         <div data-reveal style={stagger(1)} className="rounded-[2rem] bg-paper p-8 md:p-10">
           <p className="text-lg text-ink-soft">A partir de</p>
-          <p className="mt-1 text-5xl font-extrabold text-ink md:text-6xl">
+          <p className="mt-1 text-4xl font-extrabold whitespace-nowrap text-ink sm:text-5xl md:text-6xl">
             {PLAN_STARTING_PRICE}
             <span className="text-2xl font-bold text-ink-soft">/mês</span>
           </p>
           <ul className="mt-8 space-y-3 text-lg">
             <li className="flex items-center gap-3">
-              <CheckIcon className="size-6 text-brand-deep" />
+              <CheckIcon className="size-6 shrink-0 text-brand-deep" />
               Treinos 3x ou 5x por semana
             </li>
             <li className="flex items-center gap-3">
-              <CheckIcon className="size-6 text-brand-deep" />
+              <CheckIcon className="size-6 shrink-0 text-brand-deep" />
               Avaliação e reavaliações físicas incluídas
             </li>
             <li className="flex items-center gap-3">
-              <CheckIcon className="size-6 text-brand-deep" />
+              <CheckIcon className="size-6 shrink-0 text-brand-deep" />
               Acompanhamento de educador físico
             </li>
           </ul>
@@ -634,7 +646,7 @@ function Plans() {
               </span>
             ))}
           </div>
-          <WhatsAppButton className="mt-10 w-full">
+          <WhatsAppButton className="mt-10 w-full" mobileLabel="Ver os valores">
             Ver valores com a recepção
           </WhatsAppButton>
         </div>
@@ -650,7 +662,7 @@ function Units() {
     <Section id="unidades">
       <Eyebrow>Unidades</Eyebrow>
       <Heading>Duas unidades em João Pessoa</Heading>
-      <div className="mt-14 grid gap-5 md:grid-cols-2">
+      <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
         {SITE.units.map((unit) => {
           const soon = unit.status === 'Nova'
           return (
@@ -658,7 +670,7 @@ function Units() {
               key={unit.name}
               data-reveal
               style={stagger(SITE.units.indexOf(unit))}
-              className={`flex flex-col rounded-3xl p-8 md:p-10 ${
+              className={`flex flex-col rounded-3xl p-6 sm:p-8 md:p-10 ${
                 soon ? 'bg-ink text-white' : 'bg-white'
               }`}
             >
@@ -680,7 +692,7 @@ function Units() {
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 {soon && (
-                  <WhatsAppButton variant="white">
+                  <WhatsAppButton variant="white" mobileLabel="Agendar visita">
                     Quero conhecer a unidade
                   </WhatsAppButton>
                 )}
@@ -710,7 +722,7 @@ function Units() {
 function Faq() {
   return (
     <Section id="duvidas" className="bg-white">
-      <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr]">
         <div>
           <Eyebrow>Dúvidas</Eyebrow>
           <Heading>Perguntas que a recepção mais ouve</Heading>
@@ -736,7 +748,7 @@ function Faq() {
 function FinalCta() {
   return (
     <section className="px-5 pb-20 md:pb-28">
-      <div data-reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-brand-bg px-8 py-16 text-white md:px-16 md:py-20">
+      <div data-reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-brand-bg px-6 py-14 text-white sm:rounded-[2.5rem] sm:px-8 sm:py-16 md:px-16 md:py-20">
         <div className="pointer-events-none absolute top-1/2 -right-6 h-[130%] -translate-y-1/2">
           <LogoIcon className="float-slow h-full text-white/10" />
         </div>

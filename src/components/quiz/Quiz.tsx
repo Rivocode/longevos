@@ -92,11 +92,6 @@ export function Quiz() {
         <Link to="/" aria-label="Voltar para o site da Longevos">
           <Logo className="h-8 w-auto" />
         </Link>
-        {!done && (
-          <span className="text-base font-semibold text-ink-soft">
-            {Math.min(step + 1, TOTAL_STEPS)} de {TOTAL_STEPS}
-          </span>
-        )}
       </header>
 
       <div className="mx-auto mt-6 w-full max-w-3xl px-5">
@@ -113,9 +108,28 @@ export function Quiz() {
             style={{ width: `${Math.max(progress * 100, 4)}%` }}
           />
         </div>
+        {!done && (
+          <div className="mt-3 flex min-h-11 items-center justify-between">
+            {step > 0 ? (
+              <button
+                type="button"
+                onClick={() => setStep((s) => s - 1)}
+                className="-ml-2 inline-flex min-h-11 items-center gap-2 rounded-full px-2 text-base font-bold text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink"
+              >
+                <ArrowRightIcon className="size-5 rotate-180" />
+                Voltar
+              </button>
+            ) : (
+              <span />
+            )}
+            <span className="text-base font-semibold text-ink-soft">
+              {Math.min(step + 1, TOTAL_STEPS)} de {TOTAL_STEPS}
+            </span>
+          </div>
+        )}
       </div>
 
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-5 py-12 md:py-16">
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-5 pt-8 pb-12 md:pt-12 md:pb-16">
         {done ? (
           <Result
             headingRef={headingRef}
@@ -220,15 +234,6 @@ export function Quiz() {
           </div>
         )}
 
-        {!done && step > 0 && (
-          <button
-            type="button"
-            onClick={() => setStep((s) => s - 1)}
-            className="mt-10 self-start text-lg font-bold text-ink-soft underline-offset-4 hover:text-ink hover:underline"
-          >
-            ← Voltar
-          </button>
-        )}
       </main>
     </div>
   )
@@ -263,7 +268,7 @@ function Result({
       </h1>
       {feedback && <p className="mt-6 text-xl leading-relaxed text-ink-soft">{feedback}</p>}
 
-      <dl className="mt-10 grid gap-3 rounded-3xl bg-white p-6 sm:grid-cols-2 md:p-8">
+      <dl className="mt-10 grid grid-cols-1 gap-3 rounded-3xl bg-white p-6 sm:grid-cols-2 md:p-8">
         {QUIZ_QUESTIONS.filter((q) => answers[q.id]).map((q) => (
           <div key={q.id}>
             <dt className="text-sm font-bold tracking-wide text-ink-soft uppercase">
