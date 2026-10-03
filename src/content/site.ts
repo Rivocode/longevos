@@ -1,5 +1,7 @@
-// TODO: confirmar com o cliente o número da recepção (formato 55 + DDD + número)
-const WHATSAPP_NUMBER = '5583000000000'
+// Formato: 55 + DDD + número, só dígitos. Por padrão usa o número da Rivocode
+// (demo); em produção defina VITE_WHATSAPP_NUMBER com o número da recepção.
+const WHATSAPP_NUMBER =
+  import.meta.env.VITE_WHATSAPP_NUMBER || '5583991511761'
 const WHATSAPP_MESSAGE =
   'Olá! Vim pelo site e quero conhecer a Longevos.'
 
