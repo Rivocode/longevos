@@ -2,6 +2,8 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
+import { SITE_NAME } from '#/content/seo'
+
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
@@ -14,18 +16,15 @@ export const Route = createRootRoute({
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
       },
-      {
-        title: 'Longevos | Academia para 50+ em João Pessoa',
-      },
-      {
-        name: 'description',
-        content:
-          'Primeira academia da Paraíba para quem tem 50+. Treino com avaliação física, educador físico, fisioterapeuta e nutricionista. Unidades Aeroclube e Miramar.',
-      },
+      { title: SITE_NAME },
       { name: 'theme-color', content: '#43956C' },
+      { property: 'og:site_name', content: SITE_NAME },
+      { property: 'og:locale', content: 'pt_BR' },
     ],
     links: [
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      { rel: 'manifest', href: '/site.webmanifest' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       {
         rel: 'preconnect',
